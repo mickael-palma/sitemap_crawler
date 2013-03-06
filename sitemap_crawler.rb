@@ -151,8 +151,9 @@ class SitemapCrawler
     skip_query_strings  = @options[:query]
     obey_robots_txt     = @options[:robot]
     sitemap             = ""
+    clean_directory
+    
     xml                 = Builder::XmlMarkup.new(:target => sitemap, :indent=>2)
-    debugger
     xml.instruct!
     xml.urlset(:xmlns=>'http://www.sitemaps.org/schemas/sitemap/0.9') {
       Anemone.crawl(url, :threads => threads,
@@ -186,6 +187,14 @@ class SitemapCrawler
     else
       Regexp.union(@options[:skip], default_skip)
     end
+  end
+
+  def clean_directory
+    website_name = @options[:website]
+    directory    = "sitemaps"
+    files = ["#{directory}/#{website_name}.db", "#{directory}/#{website_name}.xml"]
+    
+    files.each { |f| File.delete(f) if File.exists?(f) }
   end
 end
 
