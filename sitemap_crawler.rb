@@ -97,7 +97,7 @@ class SitemapCrawler
     p "--------------------------------------------"
 
     p "--------------------------------------------"
-    p " We found #{@erros.size} bad/non-product url"
+    p " We found #{@errors.size} bad/non-product url"
     p "--------------------------------------------"
   end
 
